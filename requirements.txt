@@ -1,0 +1,6 @@
+pandas
+ipython
+xlrd
+xlwt
+natsort
+matplotlib
