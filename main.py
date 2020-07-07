@@ -14,7 +14,7 @@ OUTPUT_DIR = 'outputs'
 
 
 if __name__ == '__main__':
-    input_data, ordered_dataframe = get_input_data(RESOURCES_DIR, 'dane1.xls', 'order.xls')
+    input_data, ordered_data_frame = get_input_data(RESOURCES_DIR, 'dane.xls', 'order.xls')
 
     plots_dirs_names = ['trends', 'normal_distributions']
     for dir_name in plots_dirs_names:
@@ -22,7 +22,7 @@ if __name__ == '__main__':
         if not os.path.exists(full_path):
             os.mkdir(full_path)
 
-    generate_output_excels(ordered_dataframe, OUTPUT_DIR)
+    generate_output_excels(ordered_data_frame, OUTPUT_DIR)
 
     for compound in input_data:
         logger.info('Working on %s', compound.name)
