@@ -1,9 +1,10 @@
-from typing import List, Dict
+from typing import List, Dict, Tuple
 
 from pandas import DataFrame
 import pandas as pd
+import numpy as np
 
-from compund_data import CompoundData
+from dataVisualizer.data_containers.compund_data import CompoundData
 
 
 def validate_compound_data(data: CompoundData) -> CompoundData:
@@ -43,3 +44,14 @@ def calc_comp_data_sum(data: CompoundData) -> float:
 def get_list_of_compound_data(data: DataFrame) -> List[CompoundData]:
     """Return list of CompoundData objects"""
     return [validate_compound_data(CompoundData(comp[0], comp[1:], data.keys()[1:])) for comp in data.values]
+
+
+def get_mean_and_std(data: List) -> Tuple[float, float]:
+    """Calculate mean and std deviation for given data"""
+    return np.mean(data), np.std(data)
+
+
+def filter_extreme_values(data: List[float], filter_sigma: float = 3) -> List[float]:
+    """Calculate mean value and filter values greater than defined sigma value"""
+    mean, _ = get_mean_and_std(data)
+    return [x for x in data if mean - mean * filter_sigma < x < mean + mean * filter_sigma]

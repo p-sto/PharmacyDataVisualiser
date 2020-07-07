@@ -4,3 +4,5 @@ xlrd
 xlwt
 natsort
 matplotlib
+seaborn
+statsmodels

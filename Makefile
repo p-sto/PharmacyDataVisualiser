@@ -1,7 +1,7 @@
-# basic:
-PROJECT_NAME=farmacja
+PROJECT_NAME=dataVisualizer
 PWD:=$(shell pwd)
 PYTHONPATH=$(PWD)
+OUTPUT_DIR=outputs
 TEST_DIR=tests/
 VENV=venv/bin
 PIP=$(VENV)/pip3
@@ -15,7 +15,7 @@ HOST_PYTHON_VER=python3.7
 VENV_PYTHOM_VER=$(VENV)/python3
 
 
-.PHONY: all venv
+.PHONY: all venv clean
 
 venv: venv/bin/activate
 
@@ -30,6 +30,7 @@ clean:
 	rm -rf .cache
 	rm -rf .mypy_cache
 	rm -rf __pycache__
+	rm -rf $(OUTPUT_DIR)/*
 	find -name '$(PROJECT_NAME).log' | xargs rm -rf
 	find $(PROJECT_NAME) -name '*.pyc' | xargs rm -rf
 	find $(PROJECT_NAME) -name '__pycache__' -type d | xargs rm -rf

@@ -24,12 +24,12 @@ class CompoundData:
 
     @property
     def quality_values(self) -> List[Union[float, None]]:
-        """"""
+        """Get only quality control samples values"""
         return [val if sample.lower().startswith('qc') else None for sample, val in zip(self.samples, self.values)]
 
     @property
     def quality_samples(self) -> List[Union[float, None]]:
-        """"""
+        """Get quality control samples names"""
         return [sample if sample.lower().startswith('qc') else None for sample in self.samples]
 
     def __repr__(self) -> str:
