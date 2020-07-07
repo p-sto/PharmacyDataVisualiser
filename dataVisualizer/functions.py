@@ -1,3 +1,4 @@
+from collections import OrderedDict
 from typing import List, Dict, Tuple
 
 from pandas import DataFrame
@@ -22,6 +23,33 @@ def read_xls_file(file_name: str) -> DataFrame:
 def get_list_of_compounds(data: DataFrame) -> List:
     """Return list of compounds"""
     return data['Compound'].to_list()
+
+
+def get_input_data(source_dir: str, data_fil_name: str, order_fil_name: str) -> Tuple[List[CompoundData], DataFrame]:
+    """Get input data as DataFrame with ordered data"""
+    data_fil = read_xls_file('{}/{}'.format(source_dir, data_fil_name))
+    sample_order_fil = read_xls_file('{}/{}'.format(source_dir, order_fil_name))
+    order_list = list(sample_order_fil['order'])
+
+    ordered_data = OrderedDict()
+    ordered_data['Compound'] = get_list_of_compounds(data_fil)
+    for sample in order_list:
+        ordered_data[sample] = data_fil[sample].to_list()
+    ordered_df = pd.DataFrame(ordered_data)
+    compounds = get_list_of_compound_data(ordered_df)
+
+    # calculate average value for every row, [1:] since first element in values is always valued 'compound'
+    ordered_df['Average'] = [calc_comp_data_average(cmp) for cmp in compounds]
+    ordered_df['SUM TUS'] = [calc_comp_data_sum(cmp) for cmp in compounds]
+
+    return compounds, ordered_df
+
+
+def generate_output_excels(data: DataFrame, output_dir: str) -> None:
+    """Generate excel outputs"""
+    transposed_ordered_df = pd.DataFrame(data).transpose()
+    data.to_excel('{}/{}'.format(output_dir, 'ordered_data.xls'), index=False)
+    transposed_ordered_df.to_excel('{}/{}'.format(output_dir, 'ordered_data_transposed.xls'))
 
 
 def get_samples(data: DataFrame) -> Dict:
