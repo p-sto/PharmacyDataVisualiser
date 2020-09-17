@@ -25,10 +25,7 @@ venv/bin/activate: requirements.txt
 	touch venv/bin/activate
 
 clean:
-	rm -rf htmlcov
-	rm -rf .coverage
 	rm -rf .cache
-	rm -rf .mypy_cache
 	rm -rf __pycache__
 	rm -rf $(OUTPUT_DIR)/*
 	find -name '$(PROJECT_NAME).log' | xargs rm -rf
