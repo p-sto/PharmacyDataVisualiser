@@ -6,6 +6,9 @@ import numpy as np
 from dataVisualizer.data_containers import ResultMatrix
 from dataVisualizer.input_data_parser.InputDataParsers import SingleFileParser, DoubleFileParser
 
+OUTPUT_EXCEL_FILE_NAME = 'ordered_data.xlsx'
+OUTPUT_EXCEL_FILE_NAME_TRANSPOSED = 'ordered_data_transposed.xlsx'
+
 
 def get_data_matrix(source_dir: str, data_fil_name: str, order_fil_name: Optional[str]) -> ResultMatrix:
     """Get input data as DataFrame with ordered data"""
@@ -16,8 +19,8 @@ def get_data_matrix(source_dir: str, data_fil_name: str, order_fil_name: Optiona
 
 def generate_output_excels(result_matrix: ResultMatrix, output_dir: str) -> None:
     """Generate excel outputs"""
-    result_matrix.data.to_excel('{}/{}'.format(output_dir, 'ordered_data.xls'), index=False)
-    result_matrix.transposed_data.to_excel('{}/{}'.format(output_dir, 'ordered_data_transposed.xls'))
+    result_matrix.data.to_excel('{}/{}'.format(output_dir, OUTPUT_EXCEL_FILE_NAME), index=False)
+    result_matrix.transposed_data.to_excel('{}/{}'.format(output_dir, OUTPUT_EXCEL_FILE_NAME_TRANSPOSED))
 
 
 def get_samples(data: DataFrame) -> Dict:

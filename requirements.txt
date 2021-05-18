@@ -1,7 +1,7 @@
 pandas
 ipython
 xlrd
-xlwt
+openpyxl
 natsort
 matplotlib
 seaborn

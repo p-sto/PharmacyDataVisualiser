@@ -18,9 +18,9 @@ if __name__ == '__main__':
 
     plots_dirs_names = ['trends', 'normal_distributions']
     for dir_name in plots_dirs_names:
-        full_path = '{}/{}'.format(OUTPUT_DIR, dir_name)
+        full_path = '{}/{}/{}'.format(os.getcwd(), OUTPUT_DIR, dir_name)
         if not os.path.exists(full_path):
-            os.mkdir(full_path)
+            os.makedirs(full_path)
 
     generate_output_excels(data_matrix, OUTPUT_DIR)
 
