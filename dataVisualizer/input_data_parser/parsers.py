@@ -1,10 +1,10 @@
-""""""
+"""Stores implementations used by input data parser"""
 from abc import ABC
 from collections import OrderedDict
 from typing import List
 
-from dataVisualizer.data_containers.ResultMatrix import ResultMatrix
-from dataVisualizer.data_containers.compund_data import CompoundData
+from dataVisualizer.data_containers.results_matrix import ResultMatrix
+from dataVisualizer.data_containers.compound import Compound
 
 from pandas import DataFrame
 import pandas as pd
@@ -21,7 +21,7 @@ def get_list_of_compounds(data: DataFrame) -> List:
     return data['Compound'].to_list()
 
 
-def calc_comp_data_average(data: CompoundData, include_missing: bool = False) -> float:
+def calc_comp_data_average(data: Compound, include_missing: bool = False) -> float:
     """Calculate average value"""
     if not include_missing:
         return sum([x for x in data.get_non_missing_values() if x]) / len(
@@ -29,28 +29,31 @@ def calc_comp_data_average(data: CompoundData, include_missing: bool = False) ->
     return sum(data.values) / len(data.values)
 
 
-def calc_comp_data_sum(data: CompoundData) -> float:
+def calc_comp_data_sum(data: Compound) -> float:
     """Calculate average value"""
     return sum(data.values)
 
 
-def validate_compound_data(data: CompoundData) -> CompoundData:
-    """Validate CompoundData object"""
+def validate_compound_data(data: Compound) -> Compound:
+    """Validate Compound object"""
     assert len(data.values) == len(data.samples)
     return data
 
 
-def get_list_of_compound_data(data: DataFrame) -> List[CompoundData]:
-    """Return list of CompoundData objects"""
-    return [validate_compound_data(CompoundData(comp[0], comp[1:], data.keys()[1:])) for comp in data.values]
+def get_list_of_compound_data(data: DataFrame) -> List[Compound]:
+    """Return list of Compound objects"""
+    return [validate_compound_data(Compound(comp[0], comp[1:], data.keys()[1:])) for comp in data.values]
 
 
 class ParserABC(ABC):
+    """General Parser class"""
 
     def parse(self) -> None:
+        """To be implemented"""
         raise NotImplementedError
 
     def get_result_matrix(self) -> ResultMatrix:
+        """To be implemented"""
         raise NotImplementedError
 
 
@@ -65,6 +68,7 @@ class SingleFileParser(ParserABC):
         self._compounds = None
 
     def parse(self) -> None:
+        """Parses data from xls file"""
         data_fil = read_xls_file('{}/{}'.format(self.source_dir, self.data_file_name))
         sample_order_fil = read_xls_file('{}/{}'.format(self.source_dir, self.order_file_name))
 
@@ -81,6 +85,7 @@ class SingleFileParser(ParserABC):
         self._raw_parsed_data['SUM TUS'] = [calc_comp_data_sum(cmp) for cmp in self._compounds]
 
     def get_result_matrix(self) -> ResultMatrix:
+        """Performs parsing provided file"""
         self.parse()
         return ResultMatrix(self._compounds, self._raw_parsed_data)
 

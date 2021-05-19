@@ -4,7 +4,7 @@ import logging
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-from dataVisualizer.data_containers.compund_data import CompoundData
+from dataVisualizer.data_containers.compound import Compound
 from dataVisualizer.functions import filter_extreme_values
 
 logger = logging.getLogger()
@@ -12,7 +12,7 @@ logger = logging.getLogger()
 BINS = 20
 
 
-def generate_normal_distribution_chart(compound: CompoundData, output_directory: str) -> None:
+def generate_normal_distribution_chart(compound: Compound, output_directory: str) -> None:
     """Generate normal distribution chart for provided compound"""
     logger.info('\t * Generating normal distribution chart')
 

@@ -1,25 +1,35 @@
 from dataclasses import dataclass
 from typing import List, Optional, Union
 
+from dataVisualizer.utils import replace_special_signs
+
+EMPTY_VALUES = [1, 0, None]
+
 
 @dataclass
-class CompoundData:
-    name: str
+class Compound:
+    """Represents Compound"""
+    _name: str
     values: List[float]
     samples: List[str]
+
+    @property
+    def name(self) -> str:
+        """Return name with replaced special signs"""
+        return replace_special_signs(self._name)
 
     def get_non_missing_values(self, prefix: str = '') -> List[float]:
         """Return non-zero values"""
         non_missing_values = []
         for sample, val in zip(self.samples, self.values):
-            non_missing_values.append(val) if val != 1 and sample.lower().startswith(prefix) else non_missing_values.append(None)
+            non_missing_values.append(val) if val not in EMPTY_VALUES and sample.lower().startswith(prefix) else non_missing_values.append(None)
         return non_missing_values
 
     def get_non_missing_samples(self, prefix: Optional[str] = None) -> List[str]:
         """Return samples for non-zero values"""
         non_missing_samples = []
         for sample, val in zip(self.samples, self.values):
-            non_missing_samples.append(sample) if val != 1 and sample.lower().startswith(prefix) else non_missing_samples.append(None)
+            non_missing_samples.append(sample) if val not in EMPTY_VALUES and sample.lower().startswith(prefix) else non_missing_samples.append(None)
         return non_missing_samples
 
     @property
