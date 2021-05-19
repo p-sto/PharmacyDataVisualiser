@@ -4,12 +4,12 @@ import logging
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-from dataVisualizer.data_containers.compund_data import CompoundData
+from dataVisualizer.data_containers.compound import Compound
 
 logger = logging.getLogger()
 
 
-def generate_trend_chart(compound: CompoundData, output_directory: str):
+def generate_trend_chart(compound: Compound, output_directory: str):
     """Generate trend chart based on passed parameters"""
     logger.info('\t * Generating trend chart')
     plt.figure(figsize=(14, 8))

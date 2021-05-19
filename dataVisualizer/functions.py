@@ -1,23 +1,24 @@
+"""Stores implementations of different functions"""
 from typing import List, Dict, Tuple, Optional
 
 from pandas import DataFrame
 import numpy as np
 
-from dataVisualizer.data_containers import ResultMatrix
-from dataVisualizer.input_data_parser.InputDataParsers import SingleFileParser, DoubleFileParser
+from dataVisualizer.data_containers import results_matrix
+from dataVisualizer.input_data_parser.parsers import SingleFileParser, DoubleFileParser
 
 OUTPUT_EXCEL_FILE_NAME = 'ordered_data.xlsx'
 OUTPUT_EXCEL_FILE_NAME_TRANSPOSED = 'ordered_data_transposed.xlsx'
 
 
-def get_data_matrix(source_dir: str, data_fil_name: str, order_fil_name: Optional[str]) -> ResultMatrix:
+def get_data_matrix(source_dir: str, data_fil_name: str, order_fil_name: Optional[str]) -> results_matrix:
     """Get input data as DataFrame with ordered data"""
     if order_fil_name:
         return SingleFileParser(source_dir, data_fil_name, order_fil_name).get_result_matrix()
     return DoubleFileParser(source_dir, data_fil_name).get_result_matrix()
 
 
-def generate_output_excels(result_matrix: ResultMatrix, output_dir: str) -> None:
+def generate_output_excels(result_matrix: results_matrix, output_dir: str) -> None:
     """Generate excel outputs"""
     result_matrix.data.to_excel('{}/{}'.format(output_dir, OUTPUT_EXCEL_FILE_NAME), index=False)
     result_matrix.transposed_data.to_excel('{}/{}'.format(output_dir, OUTPUT_EXCEL_FILE_NAME_TRANSPOSED))
