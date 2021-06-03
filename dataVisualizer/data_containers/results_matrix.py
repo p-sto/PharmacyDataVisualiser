@@ -7,8 +7,8 @@ from dataVisualizer.data_containers.compound import Compound
 from dataVisualizer.exceptions import NotFound
 
 
-class ResultMatrix:
-    """Represents Results Matrix"""
+class DataMatrix:
+    """Represents Data Matrix"""
 
     def __init__(self, compounds: List[Compound], data: pd.DataFrame):
         """Initialize objects"""

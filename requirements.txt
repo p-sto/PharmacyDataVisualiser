@@ -6,3 +6,6 @@ natsort
 matplotlib
 seaborn
 statsmodels
+
+ipython
+notebook

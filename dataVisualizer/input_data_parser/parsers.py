@@ -3,7 +3,7 @@ from abc import ABC
 from collections import OrderedDict
 from typing import List
 
-from dataVisualizer.data_containers.results_matrix import ResultMatrix
+from dataVisualizer.data_containers.results_matrix import DataMatrix
 from dataVisualizer.data_containers.compound import Compound
 
 from pandas import DataFrame
@@ -52,7 +52,7 @@ class ParserABC(ABC):
         """To be implemented"""
         raise NotImplementedError
 
-    def get_result_matrix(self) -> ResultMatrix:
+    def get_result_matrix(self) -> DataMatrix:
         """To be implemented"""
         raise NotImplementedError
 
@@ -84,10 +84,10 @@ class SingleFileParser(ParserABC):
         self._raw_parsed_data['Average'] = [calc_comp_data_average(cmp) for cmp in self._compounds]
         self._raw_parsed_data['SUM TUS'] = [calc_comp_data_sum(cmp) for cmp in self._compounds]
 
-    def get_result_matrix(self) -> ResultMatrix:
+    def get_result_matrix(self) -> DataMatrix:
         """Performs parsing provided file"""
         self.parse()
-        return ResultMatrix(self._compounds, self._raw_parsed_data)
+        return DataMatrix(self._compounds, self._raw_parsed_data)
 
 
 class DoubleFileParser(ParserABC):
@@ -101,6 +101,6 @@ class DoubleFileParser(ParserABC):
     def parse(self) -> None:
         pass
 
-    def get_result_matrix(self) -> ResultMatrix:
+    def get_result_matrix(self) -> DataMatrix:
         self.parse()
-        return ResultMatrix(self._compounds, self._raw_parsed_data)
+        return DataMatrix(self._compounds, self._raw_parsed_data)
