@@ -11,7 +11,7 @@ PYLINT=$(VENV)/pylint
 COVERAGE=$(VENV)/coverage
 MYPY=$(VENV)/mypy
 MYPYFLAGS=--ignore-missing-imports --follow-imports=skip
-HOST_PYTHON_VER=python3.7
+HOST_PYTHON_VER=python3.8
 VENV_PYTHOM_VER=$(VENV)/python3
 
 
